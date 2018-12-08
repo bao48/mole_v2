@@ -110,6 +110,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
     }
 
     public void saveFile() {
+        System.out.println("Hello!");
         String contents = docEdit.getText();
         System.out.println(contents);
         try {
