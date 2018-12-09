@@ -1,3 +1,15 @@
+/**
+ * GUI_v3
+ * User interface to edit a variety of files
+ * Only supports word documents for now
+ *
+ * @author  YuKai Bao
+ * @version 1.0
+ * @since   2018.12.05
+ */
+
+
+
 package com.example.v3;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
