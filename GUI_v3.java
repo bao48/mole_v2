@@ -33,33 +33,72 @@ import java.util.List;
 
 public class GUI_v3 extends JFrame implements WindowListener {
 
+    /**
+     * panelNorth is the JPanel at the very top (think header)
+      */
     private JPanel panelNorth;
-    private static JLabel defaultNorth = new JLabel("No folder selected.");
+    private final JLabel defaultNorth = new JLabel("No folder selected.");
+
+    /**
+     * pathInitial is the initial file path
+     */
     private String pathInitial = "";
-    private String currentDirectory;         // Directory that the open file is in
-    private String currentOpenFile;         // Open file's name
+
+    /**
+     * currentDirectory is the Directory that the open file is in
+     */
+    private String currentDirectory;
+
+    /**
+     * Open file's name (including type, e.g. .docx)
+     */
+    private String currentOpenFile;
+
+    /**
+     * currentFilePath is the path without the open file's name
+     */
     private String currentFilePath;
 
+    /**
+     * menuBar is the bar that "File" is on
+     */
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
     private JMenuItem menuItemOpen = new JMenuItem("Open");
     private JMenuItem menuItemSave = new JMenuItem("Save");
 
+    /**
+     * panelWest is a JPanel on the west, below north and above south
+     */
     private JPanel panelWest;
-    private static JLabel defaultWest = new JLabel("No folder selected.");
+    private final JLabel defaultWest = new JLabel("No folder selected.");
     private JTree fileTree;
 
+    /**
+     * panelEast is the JPanel to the east, below north and above south
+     */
     private JPanel panelEast;
-    private static JLabel defaultEast = new JLabel("Maybe something should go here!");
+    private final JLabel defaultEast = new JLabel("Maybe something should go here!");
     private JLabel pathLabel;
 
+    /**
+     * panelCenter is the very center panel with the text editor
+     * it is in the middle, sandwiched between everything else
+     */
     private JPanel panelCenter;
-    private static JLabel defaultCenter = new JLabel("Select a file to begin");
+    private final JLabel defaultCenter = new JLabel("Select a file to begin");
     private JTextArea docEdit;
 
+    /**
+     * panelSouth is the very bottom panel (think footer)
+     */
     private JPanel panelSouth;
-    private static JLabel defaultSouth = new JLabel("Default footer");  // to remove
+    private final JLabel defaultSouth = new JLabel("Default footer");  // to remove
 
+
+    /**
+     * Sets initial panel
+     */
     public GUI_v3() {
 
         menuFile.setMnemonic(KeyEvent.VK_CONTROL);
@@ -121,8 +160,12 @@ public class GUI_v3 extends JFrame implements WindowListener {
         pack();
     }
 
+
+
+    /**
+     * saveFile() saves the file in docEdit as a word document
+     */
     public void saveFile() {
-        System.out.println("Hello!");
         String contents = docEdit.getText();
         System.out.println(contents);
         try {
@@ -146,6 +189,11 @@ public class GUI_v3 extends JFrame implements WindowListener {
         }
     }
 
+    /**
+     * setInitialFilePath sets the root filepath and adds the north panel. It starts storing initial variables.
+     * @param filePath is the initial path
+     * @return none
+     */
     public void setInitialFilePath(String filePath) {
         pathInitial = filePath;
         currentDirectory = pathInitial;
@@ -156,6 +204,11 @@ public class GUI_v3 extends JFrame implements WindowListener {
         currentDirectory = getCurrentDirectory(filePath);
     }
 
+    /**
+     * getCurrentDirectory gets the folder that the user is currently in (the folder right before the file, or the last folder at the end of the filepath)
+     * @param filePath is the initial path
+     * @return none
+     */
     public String getCurrentDirectory(String filePath) {
         int lastIndex = pathInitial.lastIndexOf(File.separatorChar);
 
@@ -170,6 +223,13 @@ public class GUI_v3 extends JFrame implements WindowListener {
         return cd;
     }
 
+    /**
+     * getHistory gets the filepath before the last directory/file
+     * This is the filepath that is printed at the top of the gui to show navigation
+     * @see {link getCurrentDirectory}
+     * @param filePath is the initial path
+     * @return String containing the text of the filepath
+     */
     public String getHistory(String filePath) {
         int lastIndex = pathInitial.lastIndexOf(File.separatorChar);
 
@@ -184,7 +244,12 @@ public class GUI_v3 extends JFrame implements WindowListener {
         return cd;
     }
 
-
+    /**
+     * constructTree constructs the file tree at the right of the document
+     * @param filepath is a String and the filepath, after which the tree is made
+     * @param head is a DefaultMutableTreeHead that is the current directory (head/root of the tree)
+     * @return none
+     */
     public void constructTree(String filepath, DefaultMutableTreeNode head) {
 
         ArrayList<String> f1 = getFolderNames(filepath);
@@ -218,6 +283,12 @@ public class GUI_v3 extends JFrame implements WindowListener {
     }
 
 
+    /**
+     * getFolderNames gets the folder names inside the filepath
+     * ATTN: does NOT get files!
+     * @param filepath is a String, where the last directory is where the folder names are being retrieved
+     * @return ArrayList<String> the list of all the names
+     */
     public static ArrayList<String> getFolderNames(String filepath) {
         ArrayList<String> names = new ArrayList<String>();
 
@@ -236,6 +307,12 @@ public class GUI_v3 extends JFrame implements WindowListener {
         return names;
     }
 
+    /**
+     * getAllFileNames gets the file names inside the filepath
+     * ATTN: does NOT get folders!
+     * @param filepath is a String, where the last directory is where the file names are being retrieved
+     * @return ArrayList<String> the list of all the names
+     */
     public static ArrayList<String> getAllFileNames(String filepath) {
         ArrayList<String> names = new ArrayList<String>();
 
@@ -252,9 +329,15 @@ public class GUI_v3 extends JFrame implements WindowListener {
 
     }
 
+    /**
+     * getDocxParagraphs gets the paragraphs of the file
+     * @param filename (including filepath and .docx) of the document from which the document is being fetched from
+     *                 (e.g. /Users/bao48/Desktop/bao48/programming/java/v3/com/example/v3/docs/ieee copy.docx)
+     * @return List<XWPFParagraph> a list of all the paragraphs in the textbox (docEdit)
+     */
     public static List<XWPFParagraph> getDocxParagraphs(String filename) {
 
-        System.out.println(filename);
+        System.out.println("FILENAME: " + filename);
 
         File file = null;
         // XWPFWordExtractor ex = null;
@@ -293,7 +376,11 @@ public class GUI_v3 extends JFrame implements WindowListener {
         }
     }
 
-
+    /**
+     * updateFromTreePath updates file path from the tree
+     * @param path traversal of the tree
+     * @return none
+     */
     public void updateFromTreePath(TreePath path) {
         String ad = getHistory(pathInitial);
         String updatedCurrent = ad;
@@ -313,7 +400,17 @@ public class GUI_v3 extends JFrame implements WindowListener {
 
     }
 
+
+    /**
+     * TreeHandler class handles actions from a tree
+     */
     public class TreeHandler implements TreeSelectionListener {
+
+        /**
+         * valueChanged determines if a file was clicked, and if so, it gets the file and updates the center panel
+         * @param e TreeSelectionEvent
+         * @return none
+         */
         public void valueChanged(TreeSelectionEvent e) {
             TreePath path = e.getPath();
             updateFromTreePath(path);

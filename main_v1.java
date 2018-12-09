@@ -25,6 +25,7 @@ public class main_v1 {
         gui.setInitialFilePath(current_path_str);
 
         // Sets default beginning folder at where the program is being implemented
+        // Can also be added to setInitialFilePath
         DefaultMutableTreeNode head = new DefaultMutableTreeNode(gui.getCurrentDirectory(current_path_str));
         gui.constructTree(current_path_str, head);
     }
