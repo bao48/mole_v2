@@ -161,7 +161,6 @@ public class GUI_v3 extends JFrame implements WindowListener {
     }
 
 
-
     /**
      * saveFile() saves the file in docEdit as a word document
      */
@@ -189,6 +188,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
         }
     }
 
+
     /**
      * setInitialFilePath sets the root filepath and adds the north panel. It starts storing initial variables.
      * @param filePath is the initial path
@@ -203,6 +203,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
 
         currentDirectory = getCurrentDirectory(filePath);
     }
+
 
     /**
      * getCurrentDirectory gets the folder that the user is currently in (the folder right before the file, or the last folder at the end of the filepath)
@@ -222,6 +223,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
         }
         return cd;
     }
+
 
     /**
      * getHistory gets the filepath before the last directory/file
@@ -243,6 +245,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
         }
         return cd;
     }
+
 
     /**
      * constructTree constructs the file tree at the right of the document
@@ -307,6 +310,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
         return names;
     }
 
+
     /**
      * getAllFileNames gets the file names inside the filepath
      * ATTN: does NOT get folders!
@@ -328,6 +332,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
         return names;
 
     }
+
 
     /**
      * getDocxParagraphs gets the paragraphs of the file
@@ -375,6 +380,7 @@ public class GUI_v3 extends JFrame implements WindowListener {
             /// System.out.println("Caught!");
         }
     }
+
 
     /**
      * updateFromTreePath updates file path from the tree
